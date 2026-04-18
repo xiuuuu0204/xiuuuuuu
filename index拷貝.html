@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>黃錦秀的履歷</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --c1: #f7f2e9;   /* 最淺奶油 */
+      --c2: #f0e8d5;   /* 奶油主色 */
+      --c3: #e5d8bc;   /* 奶油深一階 */
+      --gold: #c9a96e;
+      --gold-d: #a8833f;
+      --gold-l: #e8d5a8;
+      --warm: #d4b483;
+      --dark: #2e2618;
+      --mid: #7a6a52;
+      --light-text: #a89070;
+      --card: #faf5eb;
+      --border: rgba(201,169,110,0.25);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: var(--c1);
+      color: var(--dark);
+      overflow-x: hidden;
+    }
+
+    /* ═══ DECORATIVE BG PATTERN ═══ */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 15% 20%, rgba(201,169,110,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 85% 75%, rgba(201,169,110,0.07) 0%, transparent 45%),
+        radial-gradient(circle at 50% 50%, rgba(212,180,131,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ═══ NAV ═══ */
+    nav {
+      position: fixed; top:0; left:0; right:0; z-index:999;
+      background: rgba(247,242,233,0.92);
+      backdrop-filter: blur(16px);
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 0 60px;
+      height: 68px;
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.4s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(168,131,63,0.12); }
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 19px; letter-spacing: 3px;
+      color: var(--dark); text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .nav-logo::before {
+      content: '✦';
+      font-size: 12px; color: var(--gold);
+      animation: spin-slow 8s linear infinite;
+    }
+    @keyframes spin-slow { to { transform: rotate(360deg); } }
+    .nav-links { display: flex; gap: 38px; }
+    .nav-links a {
+      text-decoration: none; font-size: 13px; letter-spacing: 1.5px;
+      color: var(--mid); position: relative; padding-bottom: 3px;
+      transition: color 0.3s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom:0; left:50%;
+      transform: translateX(-50%);
+      width: 0; height: 1.5px; background: var(--gold);
+      transition: width 0.35s;
+    }
+    .nav-links a:hover { color: var(--dark); }
+    .nav-links a:hover::after { width: 100%; }
+
+    /* ═══ HERO ═══ */
+    #about {
+      position: relative; z-index: 1;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 110px 80px 80px;
+      max-width: 1280px; margin: 0 auto;
+      gap: 90px;
+    }
+
+    /* floating deco circles behind hero */
+    #about::before {
+      content: '';
+      position: absolute;
+      width: 520px; height: 520px;
+      border-radius: 50%;
+      background: radial-gradient(circle, var(--gold-l) 0%, transparent 70%);
+      opacity: 0.35;
+      top: 50%; left: 0;
+      transform: translateY(-50%);
+      pointer-events: none;
+    }
+    #about::after {
+      content: '';
+      position: absolute;
+      width: 300px; height: 300px;
+      border-radius: 50%;
+      border: 1.5px dashed rgba(201,169,110,0.3);
+      top: 12%; right: 8%;
+      pointer-events: none;
+      animation: rotate-dashed 30s linear infinite;
+    }
+    @keyframes rotate-dashed { to { transform: rotate(360deg); } }
+
+    /* Photo */
+    .hero-photo-area {
+      flex-shrink: 0; position: relative;
+      opacity: 0; transform: translateX(-50px);
+      transition: opacity 0.9s, transform 0.9s;
+    }
+    .hero-photo-area.visible { opacity:1; transform:translateX(0); }
+
+    .photo-ring {
+      width: 260px; height: 260px;
+      border-radius: 50%;
+      padding: 6px;
+      background: linear-gradient(135deg, var(--gold-l), var(--gold), var(--warm), var(--gold-l));
+      box-shadow: 0 0 0 12px rgba(201,169,110,0.12), 0 20px 60px rgba(168,131,63,0.2);
+      position: relative;
+    }
+    .photo-ring img {
+      width: 100%; height: 100%;
+      border-radius: 50%; object-fit: cover;
+      display: block;
+    }
+    .photo-label {
+      position: absolute; bottom: -14px; left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, var(--gold-d), var(--gold));
+      color: #fff8ee;
+      font-size: 13px; font-weight: 500;
+      padding: 6px 24px; border-radius: 30px;
+      white-space: nowrap;
+      box-shadow: 0 4px 16px rgba(168,131,63,0.3);
+      letter-spacing: 1px;
+    }
+
+    /* small deco badges around photo */
+    .photo-badge {
+      position: absolute;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 7px 12px;
+      font-size: 11px; color: var(--mid);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      white-space: nowrap;
+      animation: float-badge 4s ease-in-out infinite;
+    }
+    .badge-1 { top: -10px; right: -40px; animation-delay: 0s; }
+    .badge-2 { bottom: 30px; right: -50px; animation-delay: 1.5s; }
+    .badge-3 { top: 40px; left: -55px; animation-delay: 0.8s; }
+    @keyframes float-badge {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-7px); }
+    }
+
+    /* Hero text */
+    .hero-content {
+      opacity: 0; transform: translateY(36px);
+      transition: opacity 0.9s 0.25s, transform 0.9s 0.25s;
+    }
+    .hero-content.visible { opacity:1; transform:translateY(0); }
+
+    .hero-eyebrow {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 16px; color: var(--gold);
+      letter-spacing: 2px; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; flex: 1; max-width: 40px; height: 1px;
+      background: var(--gold-l);
+    }
+    .hero-content h1 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(30px, 3.5vw, 46px);
+      font-weight: 700; line-height: 1.35;
+      margin-bottom: 28px; color: var(--dark);
+    }
+    .hero-content h1 em {
+      font-style: normal; color: var(--gold-d);
+      position: relative;
+    }
+    .hero-content h1 em::after {
+      content: '';
+      position: absolute; bottom: 2px; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold-l), var(--gold));
+      border-radius: 2px; opacity: 0.6;
+    }
+    .hero-content p {
+      font-size: 14.5px; line-height: 2;
+      color: var(--mid); max-width: 560px; margin-bottom: 14px;
+    }
+    .hero-content p strong { color: var(--dark); font-weight: 500; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 32px; }
+    .tag {
+      padding: 7px 18px;
+      background: var(--c2);
+      border: 1px solid var(--gold-l);
+      border-radius: 30px; font-size: 12.5px;
+      color: var(--mid); cursor: default;
+      transition: all 0.3s; letter-spacing: 0.5px;
+    }
+    .tag:hover {
+      background: var(--gold); color: #fff8ee;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(201,169,110,0.3);
+    }
+
+    /* ═══ DIVIDER ═══ */
+    .divider {
+      position: relative; z-index: 1;
+      display: flex; align-items: center; justify-content: center;
+      gap: 16px; padding: 0 60px;
+      margin: 0;
+    }
+    .divider-line {
+      flex: 1; height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-l), transparent);
+    }
+    .divider-icon {
+      font-size: 18px; color: var(--gold);
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+    @keyframes pulse-glow {
+      0%,100% { opacity:0.6; transform: scale(1); }
+      50% { opacity:1; transform: scale(1.2); }
+    }
+
+    /* ═══ SECTIONS ═══ */
+    section { position: relative; z-index:1; padding: 100px 60px; }
+
+    .section-header {
+      text-align: center; margin-bottom: 64px;
+    }
+    .section-header .s-label {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 15px; color: var(--gold);
+      letter-spacing: 3px; display: block; margin-bottom: 8px;
+    }
+    .section-header h2 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: clamp(26px, 3vw, 38px); font-weight: 700;
+    }
+    .section-header .s-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 2.5vw, 32px);
+      color: var(--gold); margin-left: 10px; font-weight: 400;
+    }
+    .section-header p { font-size: 13.5px; color: var(--light-text); margin-top: 12px; }
+
+    /* section bg alternation */
+    #portfolio { background: var(--c2); }
+    #skills    { background: var(--c1); }
+    #contact   { background: var(--c3); }
+
+    /* section top ornament */
+    .ornament {
+      text-align: center; font-size: 22px;
+      color: var(--gold-l); margin-bottom: 10px;
+      letter-spacing: 12px;
+    }
+
+    /* ═══ PORTFOLIO CARDS ═══ */
+    .portfolio-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 28px; max-width: 1100px; margin: 0 auto;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden; display: flex; flex-direction: column;
+      position: relative;
+      opacity: 0; transform: translateY(50px);
+      transition: opacity 0.7s, transform 0.7s, box-shadow 0.4s;
+    }
+    .card.visible { opacity:1; transform:translateY(0); }
+    .card::before {
+      content: '';
+      position: absolute; top:0; left:0; right:0; height: 3px;
+      background: linear-gradient(90deg, var(--gold-l), var(--gold), var(--gold-l));
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 16px 48px rgba(168,131,63,0.18);
+      transform: translateY(-8px) !important;
+    }
+    .card:hover::before { opacity: 1; }
+
+    .card-top {
+      padding: 28px 26px 16px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .card-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--c2), var(--gold-l));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 26px; flex-shrink: 0;
+      box-shadow: 0 4px 12px rgba(201,169,110,0.2);
+    }
+    .card-cat-wrap { flex: 1; }
+    .card-cat {
+      display: inline-block;
+      padding: 3px 12px;
+      background: var(--gold);
+      color: #fff8ee; font-size: 11px;
+      border-radius: 4px; letter-spacing: 0.5px;
+    }
+    .card-body { padding: 4px 26px 18px; flex:1; }
+    .card-body h3 {
+      font-family: 'Noto Serif TC', serif;
+      font-size: 16.5px; margin-bottom: 10px; color: var(--dark);
+      line-height: 1.5;
+    }
+    .card-body p {
+      font-size: 12.5px; line-height: 1.85; color: var(--mid);
+    }
+    .card-techs {
+      display: flex; gap: 7px; flex-wrap: wrap;
+      padding: 14px 26px; border-top: 1px dashed var(--border);
+    }
+    .card-tech {
+      font-size: 11.5px; color: var(--light-text);
+      background: var(--c2); padding: 3px 10px; border-radius: 4px;
+      border: 1px solid var(--border);
+    }
+    .card-btn {
+      margin: 0 26px 24px;
+      padding: 10px; text-align: center;
+      border: 1.5px solid var(--gold); border-radius: 10px;
+      color: var(--gold-d); font-size: 13px;
+      cursor: pointer; text-decoration: none; display: block;
+      transition: all 0.3s; background: transparent;
+      font-family: 'Noto Sans TC', sans-serif;
+      letter-spacing: 0.5px;
+    }
+    .card-btn:hover {
+      background: var(--gold); color: #fff8ee;
+      box-shadow: 0 6px 20px rgba(201,169,110,0.35);
+    }
+    .card-btn.filled {
+      background: linear-gradient(135deg, var(--dark), #3e3020);
+      border-color: transparent; color: #fff8ee;
+    }
+    .card-btn.filled:hover {
+      background: linear-gradient(135deg, var(--gold-d), var(--gold));
+    }
+
+    /* ═══ SKILLS ═══ */
+    .skills-wrapper {
+      max-width: 900px; margin: 0 auto;
+    }
+    .skills-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 36px 70px;
+    }
+    .skill-item {
+      opacity:0; transform: translateX(-24px);
+      transition: opacity 0.6s, transform 0.6s;
+    }
+    .skill-item.from-right { transform: translateX(24px); }
+    .skill-item.visible { opacity:1; transform: translateX(0); }
+
+    .skill-header {
+      display: flex; justify-content: space-between;
+      font-size: 14px; margin-bottom: 10px;
+    }
+    .skill-name { color: var(--dark); font-weight: 500; }
+    .skill-pct {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; color: var(--gold); font-weight: 600;
+    }
+    .skill-bar-bg {
+      width: 100%; height: 9px;
+      background: var(--c3); border-radius: 99px; overflow: hidden;
+      position: relative;
+    }
+    .skill-bar {
+      height: 100%; width: 0; border-radius: 99px;
+      background: linear-gradient(90deg, var(--gold-l), var(--gold), var(--gold-d));
+      transition: width 1.3s cubic-bezier(0.4,0,0.2,1);
+      position: relative;
+    }
+    .skill-bar::after {
+      content: '';
+      position: absolute; right: 0; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      background: var(--gold-d); border-radius: 50%;
+      border: 2px solid var(--c1);
+      box-shadow: 0 0 6px rgba(168,131,63,0.4);
+    }
+    .skill-highlight .skill-bar-bg {
+      box-shadow: 0 0 0 3px rgba(201,169,110,0.15);
+    }
+
+    /* skill icon cards (decorative) */
+    .skill-icons-row {
+      display: flex; justify-content: center;
+      gap: 20px; flex-wrap: wrap;
+      margin-top: 56px;
+    }
+    .skill-chip {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 20px;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 30px; font-size: 13px; color: var(--mid);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.04);
+      transition: all 0.3s;
+    }
+    .skill-chip:hover {
+      background: var(--gold); color: #fff8ee;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(201,169,110,0.28);
+    }
+    .skill-chip span { font-size: 17px; }
+
+    /* ═══ CONTACT ═══ */
+    .contact-inner {
+      max-width: 680px; margin: 0 auto;
+    }
+    .contact-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 24px; padding: 56px 52px;
+      opacity:0; transform: translateY(40px);
+      transition: opacity 0.8s, transform 0.8s;
+      position: relative; overflow: hidden;
+    }
+    .contact-box::before {
+      content: '';
+      position: absolute; top: -60px; right: -60px;
+      width: 200px; height: 200px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(201,169,110,0.15), transparent 70%);
+      pointer-events: none;
+    }
+    .contact-box.visible { opacity:1; transform:translateY(0); }
+
+    .social-icons {
+      display: flex; justify-content: center; gap: 14px;
+      margin-bottom: 40px;
+    }
+    .social-icon {
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1.5px solid var(--gold-l);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--gold); font-size: 15px; text-decoration: none;
+      background: var(--c2);
+      transition: all 0.3s;
+    }
+    .social-icon:hover {
+      background: var(--gold); color: #fff8ee;
+      transform: scale(1.15) rotate(-5deg);
+      box-shadow: 0 6px 20px rgba(201,169,110,0.35);
+    }
+
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 16px; margin-bottom: 16px;
+    }
+    input, textarea {
+      width: 100%;
+      padding: 13px 18px;
+      border: 1.5px solid var(--gold-l);
+      border-radius: 12px; background: var(--c1);
+      font-family: 'Noto Sans TC', sans-serif;
+      font-size: 14px; color: var(--dark);
+      outline: none; resize: vertical;
+      transition: border-color 0.3s, box-shadow 0.3s, background 0.3s;
+    }
+    input::placeholder, textarea::placeholder { color: var(--light-text); }
+    input:focus, textarea:focus {
+      border-color: var(--gold); background: #fffdf8;
+      box-shadow: 0 0 0 4px rgba(201,169,110,0.12);
+    }
+    textarea { min-height: 130px; margin-bottom: 24px; }
+    .submit-btn {
+      display: block; margin: 0 auto;
+      width: 200px; padding: 15px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-d));
+      color: #fff8ee; border: none; border-radius: 40px;
+      font-size: 15px; font-family: 'Noto Sans TC', sans-serif;
+      cursor: pointer; letter-spacing: 1px;
+      transition: all 0.3s; position: relative; overflow: hidden;
+    }
+    .submit-btn::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .submit-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(168,131,63,0.38);
+    }
+    .submit-btn:hover::after { opacity: 1; }
+    .submit-btn:active { transform: translateY(0); }
+
+    /* ═══ FOOTER ═══ */
+    footer {
+      position: relative; z-index:1;
+      background: var(--c2);
+      padding: 32px 60px;
+      display: flex; justify-content: space-between; align-items: center;
+      border-top: 1px solid var(--border);
+      font-size: 13px; color: var(--light-text);
+    }
+    footer .f-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 16px; color: var(--gold);
+      letter-spacing: 2px;
+    }
+    footer .f-dots { letter-spacing: 6px; color: var(--gold-l); }
+
+    /* ═══ TOAST ═══ */
+    .toast {
+      position: fixed; bottom: 32px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      background: var(--dark); color: var(--gold-l);
+      padding: 13px 30px; border-radius: 40px;
+      font-size: 14px; opacity:0;
+      transition: opacity 0.4s, transform 0.4s; z-index:9999;
+      border: 1px solid rgba(201,169,110,0.3);
+    }
+    .toast.show { opacity:1; transform: translateX(-50%) translateY(0); }
+
+    /* ═══ SCROLL TOP ═══ */
+    #scrollTop {
+      position: fixed; bottom: 36px; right: 36px;
+      width: 48px; height: 48px;
+      background: linear-gradient(135deg, var(--gold), var(--gold-d));
+      color: #fff8ee; border: none; border-radius: 50%;
+      font-size: 20px; cursor: pointer;
+      opacity:0; pointer-events:none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index:888; display:flex; align-items:center; justify-content:center;
+      box-shadow: 0 6px 20px rgba(168,131,63,0.35);
+    }
+    #scrollTop.show { opacity:1; pointer-events:all; }
+    #scrollTop:hover { transform: scale(1.12) translateY(-3px); }
+
+    /* ═══ RESPONSIVE ═══ */
+    @media (max-width: 900px) {
+      #about { flex-direction: column; align-items:center; text-align:center; padding: 110px 30px 70px; gap:50px; }
+      #about::before, #about::after { display:none; }
+      .hero-eyebrow { justify-content: center; }
+      .hero-content p { margin: 0 auto 14px; }
+      .tags { justify-content: center; }
+      .badge-1,.badge-2,.badge-3 { display:none; }
+      section { padding: 80px 30px; }
+      nav { padding: 0 28px; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; gap: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      .contact-box { padding: 36px 24px; }
+      footer { flex-direction: column; gap:8px; text-align:center; }
+    }
+    @media (max-width:600px) {
+      .nav-logo { font-size:14px; }
+      .nav-links { gap:18px; }
+      .nav-links a { font-size:11px; }
+      .photo-ring { width:210px; height:210px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ═══ NAV ═══ -->
+<nav id="navbar">
+  <a class="nav-logo" href="#about">XIUUUUUU 的履歷</a>
+  <div class="nav-links">
+    <a href="#about">關於我</a>
+    <a href="#portfolio">作品集</a>
+    <a href="#skills">技能</a>
+    <a href="#contact">聯絡</a>
+  </div>
+</nav>
+
+<!-- ═══ HERO ═══ -->
+<section id="about">
+  <div class="hero-photo-area" id="heroImg">
+    <div class="photo-ring">
+      <img src="https://preview.redd.it/silly-cat-memes-for-you-v0-fwi12dcn423d1.jpg?width=959&format=pjpg&auto=webp&s=5610f9fcbb496defaccf8e5cd17a014288be550a" alt="黃錦秀" />
+    </div>
+    <div class="photo-label">黃錦秀</div>
+    <div class="photo-badge badge-1">✦ UI/UX Designer</div>
+    <div class="photo-badge badge-2">💪 健身初學者</div>
+    <div class="photo-badge badge-3">🎓 嘉大數位系</div>
+  </div>
+
+  <div class="hero-content" id="heroContent">
+    <div class="hero-eyebrow">Portfolio · 2026</div>
+    <h1>探索<em>設計</em>與<em>程式</em>的平衡點</h1>
+    <p>目前就讀於 <strong>嘉義大學 數位學習設計與管理學系</strong>。我致力於將 <strong>UI/UX 視覺美學 與 後端程式邏輯</strong> 深度結合，創造兼具功能與美感的數位體驗。</p>
+    <p>具備 <strong>Python 與 C#</strong> 實作經驗，擅長利用 <strong>Figma</strong> 進行介面規劃。在 2D 像素遊戲與網頁架構開發中，我不斷追求在複雜邏輯中找尋最直觀的使用者路徑。</p>
+    <p>我同時也是一名 <strong>健身初學者</strong>，享受在重訓中挑戰自我的過程，並將那份對動作精確度的追求與堅持，轉化為我對代碼品質與視覺細節的紀律要求。</p>
+    <div class="tags">
+      <span class="tag"># UI/UX 設計</span>
+      <span class="tag"># Python &amp; C#</span>
+      <span class="tag"># 健身初學者</span>
+      <span class="tag"># 嘉大數位系</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-icon">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ═══ PORTFOLIO ═══ -->
+<section id="portfolio">
+  <div class="section-header">
+    <span class="s-label">Selected Works</span>
+    <div class="ornament">· · ·</div>
+    <h2>精選專案<span class="s-en">/ Portfolio</span></h2>
+    <p>以下內容同步自我的雲端作品集資料夾。</p>
+  </div>
+
+  <div class="portfolio-grid">
+    <div class="card" data-delay="0">
+      <div class="card-top">
+        <div class="card-icon">🎮</div>
+        <div class="card-cat-wrap"><span class="card-cat"># 遊戲開發</span></div>
+      </div>
+      <div class="card-body">
+        <h3>賭"薄"人生｜2D 像素教育遊戲</h3>
+        <p>嘉義大學畢業專題。以 Unity 開發的 2D 數位互動遊戲，透過主角「阿怒」的視角，模擬真實人生困境與博弈風險。包含完整的「人格分析系統」與「隨情信」機制。</p>
+      </div>
+      <div class="card-techs">
+        <span class="card-tech">Unity (C#)</span>
+        <span class="card-tech">行為分析</span>
+      </div>
+      <a class="card-btn" href="https://drive.google.com/drive/folders/1mmXLP8TBFZpgZgjlXdomlhxmNQ8nKEdb?usp=sharing" target="_blank">查看專題報告與架構</a>
+    </div>
+
+    <div class="card" data-delay="160">
+      <div class="card-top">
+        <div class="card-icon">🌐</div>
+        <div class="card-cat-wrap"><span class="card-cat"># 網站實作</span></div>
+      </div>
+      <div class="card-body">
+        <h3>個人品牌/貓咖店長網頁設計</h3>
+        <p>負責前端頁面開發與 UI/UX 規劃，包含「貓生寫真」與「庫偷聯繫」互動留言版功能。並將 QGIS 空間分析論文成果轉化為數位圖資展示。</p>
+      </div>
+      <div class="card-techs">
+        <span class="card-tech">ASP.NET MVC</span>
+        <span class="card-tech">QGIS</span>
+      </div>
+      <a class="card-btn filled" href="https://codepen.io/xiuuuu0204/pen/qEZymeL" target="_blank">查看網站原始碼</a>
+    </div>
+
+    <div class="card" data-delay="320">
+      <div class="card-top">
+        <div class="card-icon">📱</div>
+        <div class="card-cat-wrap"><span class="card-cat"># 行動應用</span></div>
+      </div>
+      <div class="card-body">
+        <h3>個人化記帳 APP｜UI 實作</h3>
+        <p>開發專注於理財教育的行動應用程式，包含收入支出比例圓餅圖、每日理財知識推播與計算機功能整合。</p>
+      </div>
+      <div class="card-techs">
+        <span class="card-tech">Figma</span>
+        <span class="card-tech">Mobile Dev</span>
+      </div>
+      <a class="card-btn" href="https://drive.google.com/drive/folders/1mmXLP8TBFZpgZgjlXdomlhxmNQ8nKEdb?usp=sharing" target="_blank">查看 App 壓縮檔</a>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider">
+  <div class="divider-line"></div>
+  <div class="divider-icon">❧</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ═══ SKILLS ═══ -->
+<section id="skills">
+  <div class="section-header">
+    <span class="s-label">What I Know</span>
+    <div class="ornament">· · ·</div>
+    <h2>專業技能<span class="s-en">/ Skills</span></h2>
+  </div>
+
+  <div class="skills-wrapper">
+    <div class="skills-grid">
+      <div class="skill-item" data-pct="85" data-side="left">
+        <div class="skill-header">
+          <span class="skill-name">HTML / CSS</span>
+          <span class="skill-pct">85%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+      <div class="skill-item skill-highlight" data-pct="90" data-side="right">
+        <div class="skill-header">
+          <span class="skill-name">UI/UX (Figma)</span>
+          <span class="skill-pct">90%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+      <div class="skill-item" data-pct="70" data-side="left">
+        <div class="skill-header">
+          <span class="skill-name">JavaScript</span>
+          <span class="skill-pct">70%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+      <div class="skill-item" data-pct="65" data-side="right">
+        <div class="skill-header">
+          <span class="skill-name">Unity (Game Dev)</span>
+          <span class="skill-pct">65%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+      <div class="skill-item" data-pct="75" data-side="left">
+        <div class="skill-header">
+          <span class="skill-name">C# / ASP.NET MVC</span>
+          <span class="skill-pct">75%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+      <div class="skill-item" data-pct="60" data-side="right">
+        <div class="skill-header">
+          <span class="skill-name">Python</span>
+          <span class="skill-pct">60%</span>
+        </div>
+        <div class="skill-bar-bg"><div class="skill-bar"></div></div>
+      </div>
+    </div>
+
+    <!-- Skill chips -->
+    <div class="skill-icons-row">
+      <div class="skill-chip"><span>🎨</span> Figma</div>
+      <div class="skill-chip"><span>🎮</span> Unity</div>
+      <div class="skill-chip"><span>🐍</span> Python</div>
+      <div class="skill-chip"><span>⚙️</span> C# / .NET</div>
+      <div class="skill-chip"><span>🌐</span> HTML / CSS</div>
+      <div class="skill-chip"><span>☕</span> JavaScript</div>
+      <div class="skill-chip"><span>🗺️</span> QGIS</div>
+    </div>
+  </div>
+</section>
+
+<!-- DIVIDER -->
+<div class="divider" style="background:var(--c3);">
+  <div class="divider-line"></div>
+  <div class="divider-icon">✦</div>
+  <div class="divider-line"></div>
+</div>
+
+<!-- ═══ CONTACT ═══ -->
+<section id="contact">
+  <div class="section-header">
+    <span class="s-label">Get In Touch</span>
+    <div class="ornament">· · ·</div>
+    <h2>聯繫我<span class="s-en">/ Contact</span></h2>
+  </div>
+
+  <div class="contact-inner">
+    <div class="contact-box" id="contactBox">
+      <div class="social-icons">
+        <a class="social-icon" href="#" title="Facebook" style="font-weight:700;font-size:16px;">f</a>
+        <a class="social-icon" href="#" title="Instagram">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+        <a class="social-icon" href="mailto:" title="Email">✉</a>
+      </div>
+      <div class="form-row">
+        <input type="text" id="fname" placeholder="您的姓名" />
+        <input type="email" id="femail" placeholder="電子郵件" />
+      </div>
+      <textarea id="fmsg" placeholder="留言內容..."></textarea>
+      <button class="submit-btn" onclick="sendForm()">送出訊息</button>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer>
+  <span class="f-logo">黃錦秀 · XIU</span>
+  <span class="f-dots">✦ · ✦</span>
+  <span>© 2026 · 設計與程式的平衡點</span>
+</footer>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<div class="toast" id="toast"></div>
+
+<script>
+  /* Nav scroll */
+  const navbar = document.getElementById('navbar');
+  const scrollBtn = document.getElementById('scrollTop');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', scrollY > 40);
+    scrollBtn.classList.toggle('show', scrollY > 500);
+  });
+
+  /* Intersection observer */
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+
+      if (el.id === 'heroImg' || el.id === 'heroContent' || el.id === 'contactBox') {
+        el.classList.add('visible');
+      }
+      if (el.classList.contains('card')) {
+        setTimeout(() => el.classList.add('visible'), parseInt(el.dataset.delay || 0));
+      }
+      if (el.classList.contains('skill-item')) {
+        if (el.dataset.side === 'right') el.classList.add('from-right');
+        el.classList.add('visible');
+        setTimeout(() => {
+          el.querySelector('.skill-bar').style.width = el.dataset.pct + '%';
+        }, 300);
+      }
+      io.unobserve(el);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('#heroImg, #heroContent, #contactBox, .card, .skill-item')
+    .forEach(el => io.observe(el));
+
+  /* Form */
+  function sendForm() {
+    const name  = document.getElementById('fname').value.trim();
+    const email = document.getElementById('femail').value.trim();
+    const msg   = document.getElementById('fmsg').value.trim();
+    if (!name || !email || !msg) { showToast('⚠️ 請填寫所有欄位'); return; }
+    showToast('✅ 訊息已送出，感謝聯繫！');
+    document.getElementById('fname').value = '';
+    document.getElementById('femail').value = '';
+    document.getElementById('fmsg').value = '';
+  }
+
+  function showToast(txt) {
+    const t = document.getElementById('toast');
+    t.textContent = txt; t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3200);
+  }
+</script>
+</body>
+</html>
